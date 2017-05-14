@@ -24,7 +24,20 @@
 let weatherUrl = "http://api.openweathermap.org/data/2.5/weather";
 let apiKey = "72af66db614bf9fd03583352142dd7a7";
 
-function getWeather(lat, lng) {
-  let url = `${weatherUrl}?lat=${lat}&lon=${lng}&APPID=${apiKey}`
 
+function getWeather(cityName) {
+  let url = `${weatherUrl}?q=${cityName}&APPID=${apiKey}`
+  fetch(url)
+    .then((res) => res.json())
+    .then((dataResJson) => {
+      let currentKelvinTemp = dataResJson.main.temp
+      let celsiusTemp = convertKelvinToCelsius(currentKelvinTemp)
+      console.log(`The current temperature is ${celsiusTemp}°C`)
+    })
+}
+
+getWeather('sydney')
+
+function convertKelvinToCelsius(kelvinTemp) {
+  return kelvinTemp - 273.15
 }
