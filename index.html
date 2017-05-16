@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" href="./app.css">
   <meta charset="UTF-8">
   <title>Weather App</title>
 </head>
 <body>
+  <div class="container">
+    <h2>Weather App</h2>
+    <div class="input-field">
+      <input id="searchCityInput" type="text">
+      <label for="searchCityInput">Enter City Name</label>
+    </div>
+    <button id="searchBtn" class="waves-effect waves-light btn">Search Weather</button>
+    <div id="searchWeatherResult"></div>
+  </div>
 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <script src="./app.js"></script>
-  <script src="./utils.js"></script>
 </body>
 </html>

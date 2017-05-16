@@ -24,6 +24,17 @@
 let weatherUrl = "http://api.openweathermap.org/data/2.5/weather";
 let apiKey = "72af66db614bf9fd03583352142dd7a7";
 
+let searchBtn = document.getElementById('searchBtn')
+let searchCityInput = document.getElementById('searchCityInput')
+let searchWeatherResult = document.getElementById('searchWeatherResult')
+
+searchBtn.addEventListener('click', () => {
+  // get city name from input
+  // save to variable, name:cityName
+  // call function getWeather
+  let cityName = searchCityInput.value
+  getWeather(cityName)
+})
 
 function getWeather(cityName) {
   let url = `${weatherUrl}?q=${cityName}&APPID=${apiKey}`
@@ -32,12 +43,40 @@ function getWeather(cityName) {
     .then((dataResJson) => {
       let currentKelvinTemp = dataResJson.main.temp
       let celsiusTemp = convertKelvinToCelsius(currentKelvinTemp)
-      console.log(`The current temperature is ${celsiusTemp}°C`)
+      let dataResJsonWeather = dataResJson.weather[0]
+      searchWeatherResult.innerHTML = `
+      <h3>${dataResJson.name}</h3>
+      <p>The current temperature is ${celsiusTemp}°C</p>
+      <p>Current weather is ${dataResJsonWeather.description}
+      <img class="weather-img" src="http://openweathermap.org/img/w/${dataResJsonWeather.icon}.png" alt="">
+      </p>
+      `
     })
+    .catch((err) => searchWeatherResult.innerHTML = `
+    <p>City not found!! Please enter a valid City.</p>
+    `)
 }
-
-getWeather('sydney')
 
 function convertKelvinToCelsius(kelvinTemp) {
-  return kelvinTemp - 273.15
+  return Math.round(kelvinTemp - 273.15)
 }
+//
+// const container = document.querySelector('#container')
+//
+// const cityName = '';
+//
+//   function render(element, data) {
+//     element.innerHTML=`
+//     <p>City Name : ${data.cityName}.</p>
+//     <input id="searchCityTask" type="text">
+//     <button id="btn">Search Weather</button>
+//     `
+//   }
+//
+//
+//   delegate('body', 'click', '#btn', event => {
+//     const searchCityTask = document.querySelector('#searchCityTask')
+//     render(container, cityName)
+//   })
+//
+//   render(container, cityName);
