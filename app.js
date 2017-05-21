@@ -28,6 +28,8 @@ let searchBtn = document.getElementById('searchBtn')
 let searchCityInput = document.getElementById('searchCityInput')
 let searchWeatherResult = document.getElementById('searchWeatherResult')
 
+let progress = $('.progress')
+
 searchBtn.addEventListener('click', () => {
   // get city name from input
   // save to variable, name:cityName
@@ -38,6 +40,9 @@ searchBtn.addEventListener('click', () => {
 
 function getWeather(cityName) {
   let url = `${weatherUrl}?q=${cityName}&APPID=${apiKey}`
+  //show progress
+  //remove hide
+  progress.removeClass("hide")
   fetch(url)
     .then((res) => res.json())
     .then((dataResJson) => {
@@ -52,31 +57,13 @@ function getWeather(cityName) {
       </p>
       `
     })
-    .catch((err) => searchWeatherResult.innerHTML = `
-    <p>City not found!! Please enter a valid City.</p>
-    `)
+    .catch((err) => searchWeatherResult.innerHTML = `<p>City not found!! Please enter a valid City.</p>`)
+    .then(function() {
+      //success and err hide progress
+      progress.addClass("hide")
+    })
 }
 
 function convertKelvinToCelsius(kelvinTemp) {
   return Math.round(kelvinTemp - 273.15)
 }
-//
-// const container = document.querySelector('#container')
-//
-// const cityName = '';
-//
-//   function render(element, data) {
-//     element.innerHTML=`
-//     <p>City Name : ${data.cityName}.</p>
-//     <input id="searchCityTask" type="text">
-//     <button id="btn">Search Weather</button>
-//     `
-//   }
-//
-//
-//   delegate('body', 'click', '#btn', event => {
-//     const searchCityTask = document.querySelector('#searchCityTask')
-//     render(container, cityName)
-//   })
-//
-//   render(container, cityName);
